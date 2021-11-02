@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        :root {
+            --btn-rel-w: 0.2fr;
+            --border-thickness: 2px;
+            /* --border-color: #484a77; */
+            --border-color: #4d9be6;
+            --border-radius: 8px;
+        }
+
+        div.shadow-outline {
+            --offset: 0.5px;
+            --blur: 0px;
+            --alpha: 0.5;
+            text-shadow:
+                var(--offset) 0px var(--blur) rgba(0, 0, 0, var(--alpha)),
+                calc(-1 * var(--offset)) 0px var(--blur) rgba(0, 0, 0, var(--alpha)),
+                0px var(--offset) var(--blur) rgba(0, 0, 0, var(--alpha)),
+                0px calc(-1 * var(--offset)) var(--blur) rgba(0, 0, 0, var(--alpha));
+        }
+
+        div.hacb-wrapper {
+            margin: 10px 0;
+            width: 250px;
+
+            display: grid;
+            grid-template-columns: var(--btn-rel-w) 1fr var(--btn-rel-w);
+
+            font-weight: bold;
+        }
+
+        div.hacb-wrapper button {
+            border: 0;
+            background: #4d9be6;
+            color: white;
+        }
+
+        div.hacb-wrapper button:hover {
+            background: #4d65b4;
+            border-color: #4d65b4 !important;
+        }
+
+        div.hacb-wrapper button:first-child {
+            border-left: var(--border-thickness) solid var(--border-color);
+            border-top: var(--border-thickness) solid var(--border-color);
+            border-bottom: var(--border-thickness) solid var(--border-color);
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        div.hacb-wrapper button:last-child {
+            border-right: var(--border-thickness) solid var(--border-color);
+            border-top: var(--border-thickness) solid var(--border-color);
+            border-bottom: var(--border-thickness) solid var(--border-color);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        div.hacb-options {
+            grid-column-start: 2;
+
+            display: grid;
+            grid-template-columns: 1fr;
+
+            color: #323353;
+
+            border-top: var(--border-thickness) solid var(--border-color);
+            border-bottom: var(--border-thickness) solid var(--border-color);
+        }
+
+        div.hacb-option {
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        div.hacb-option:not(.hacb-option-active) {
+            display: none;
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, sans-serif;
+            color: #4d9be6;
+        }
+
+        .page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+        }
+
+        .page header {
+            grid-column: 1 / 3;
+            text-align: center;
+        }
+
+        .page header h1 {
+            margin: 0;
+            margin-top: 10px;
+            text-shadow: 2px 2px 0.5px #4d65b44d;
+        }
+
+        .page #sword-container {
+            display: flex;
+            justify-content: right;
+            margin-right: 30px;
+        }
+
+        .page #settings-container {
+            display: flex;
+            justify-content: left;
+        }
+
+        .page #settings-container h2 {
+            margin: 0;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 610px) {
+            .page {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .page header {
+                grid-column: 1;
+            }
+            .page #sword-container {
+                justify-content: center;
+                margin: 0;
+            }
+            .page #settings-container {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="page">
+        <header>
+            <h1>SVG Sword Builder</h1>
+        </header>
+        <div id="sword-container">
+            <object id="svg-sword" data="./swords.svg" type="image/svg+xml"></object>
+        </div>
+        <div id="settings-container">
+            <div>
+                <h2>Blade</h2>
+                <div class="hacb-wrapper" id="blade-type" data-loop="true"></div>
+                <div class="hacb-wrapper" id="blade-mat" data-loop="true"></div>
+
+                <h2>Cross-guard</h2>
+                <div class="hacb-wrapper" id="crossguard-type" data-loop="true"></div>
+                <div class="hacb-wrapper" id="crossguard-mat" data-loop="true"></div>
+
+                <h2>Grip</h2>
+                <div class="hacb-wrapper" id="grip-type" data-loop="true"></div>
+                <div class="hacb-wrapper" id="grip-mat" data-loop="true"></div>
+
+                <h2>Pommel</h2>
+                <div class="hacb-wrapper" id="pommel-type" data-loop="true"></div>
+                <div class="hacb-wrapper" id="pommel-mat" data-loop="true"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const SVG_ID = "svg-sword";
+
+        function svgChangeGradMaterial(svgID, gradID, materialName) {
+            const svgElement = document.getElementById(svgID);
+            const svgDoc = svgElement.contentDocument;
+            const gradElement = svgDoc.getElementById(gradID);
+
+            // Change class for light stop
+            const currMatClassLight = gradElement.children[0].classList[0];
+            gradElement.children[0].classList.remove(currMatClassLight);
+            gradElement.children[0].classList.add(materialName + "-light");
+
+            // Change class for dark stop
+            const currMatClassDark = gradElement.children[1].classList[0];
+            gradElement.children[1].classList.remove(currMatClassDark);
+            gradElement.children[1].classList.add(materialName + "-dark");
+        }
+
+        function svgChangePartType(svgID, partID) {
+            const svgElement = document.getElementById(svgID);
+            const svgDoc = svgElement.contentDocument;
+            const nextPartType = svgDoc.getElementById(partID);
+            const wrapper = nextPartType.parentElement;
+            const currentPartType = wrapper.querySelector("g.active");
+
+            currentPartType.classList.toggle("active");
+            nextPartType.classList.toggle("active");
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const svgElement = document.getElementById(SVG_ID);
+            svgElement.addEventListener("load", () => {
+
+                svgChangeGradMaterial(SVG_ID, "grad-blade", "wood");
+                svgChangeGradMaterial(SVG_ID, "grad-crossguard", "wood");
+                svgChangeGradMaterial(SVG_ID, "grad-grip", "wood");
+                svgChangeGradMaterial(SVG_ID, "grad-pommel", "wood");
+
+                svgChangePartType(SVG_ID, "blade-1");
+                svgChangePartType(SVG_ID, "crossguard-1");
+                svgChangePartType(SVG_ID, "grip-1");
+                svgChangePartType(SVG_ID, "pommel-1");
+
+                const materials = ["Wood", "Steel", "Gold", "Obsidian", "Diamond"];
+                const bladeTypes = ["Type 1", "Type 2", "Type 3"];
+                const bladeMats = materials;
+                const crossguardTypes = ["Type 1", "Type 2"];
+                const crossguardMats = materials;
+                const gripTypes = ["Type 1", "Type 2"];
+                const gripMats = materials;
+                const pommelTypes = ["Type 1", "Type 2", "Type 3"];
+                const pommelMats = materials;
+
+                createHACB("blade-type", bladeTypes).addEventListener("changed", handlePartTypeChange);
+                createHACB("blade-mat", bladeMats, true).addEventListener("changed", handleMaterialChange);
+                createHACB("crossguard-type", crossguardTypes).addEventListener("changed", handlePartTypeChange);
+                createHACB("crossguard-mat", crossguardMats, true).addEventListener("changed", handleMaterialChange);
+                createHACB("grip-type", gripTypes).addEventListener("changed", handlePartTypeChange);
+                createHACB("grip-mat", gripMats, true).addEventListener("changed", handleMaterialChange);
+                createHACB("pommel-type", pommelTypes).addEventListener("changed", handlePartTypeChange);
+                createHACB("pommel-mat", pommelMats, true).addEventListener("changed", handleMaterialChange);
+            });
+        });
+
+        function handlePartTypeChange(event) {
+            svgChangePartType(SVG_ID, event["HACB"].partType + "-" + (event["HACB"].newIndex + 1));
+        }
+
+        function handleMaterialChange(event) {
+            svgChangeGradMaterial(SVG_ID, "grad-" + event["HACB"].partType, event["HACB"].newValue);
+        }
+
+        function initHACBButtons() {
+            document.querySelectorAll("div.hacb-wrapper").forEach(input => {
+                input.querySelectorAll('button[data-dir="left"], button[data-dir="right"]').forEach(btn => {
+                    btn.addEventListener("click", handleClick);
+                });
+            });
+        }
+
+        function createHACB(id, options, addIndices = false) {
+            const wrapper = document.getElementById(id);
+            console.assert(wrapper, "createHACB failed, cannot find element with id: " + id);
+            console.assert(options.length > 0, "createHACB failed, options length is zero")
+
+            // Create left button
+            const btnLeft = document.createElement("button");
+            btnLeft.type = "button";
+            btnLeft.dataset.dir = "left";
+            btnLeft.innerHTML = "&#x25C0";
+            wrapper.appendChild(btnLeft);
+            btnLeft.addEventListener("click", handleClick);
+
+            // Create container for options
+            const optionsContainer = document.createElement("div");
+            optionsContainer.classList.add("hacb-options");
+            wrapper.appendChild(optionsContainer);
+
+            // Create options
+            for (let i = 0; i < options.length; i++) {
+                const optionDiv = document.createElement("div");
+                optionDiv.classList.add("hacb-option");
+                optionDiv.dataset.value = options[i].toLowerCase();
+                optionDiv.dataset.index = i.toString();
+                optionDiv.innerHTML = addIndices ? ((i + 1).toString() + ". ") + options[i] : options[i];
+                optionsContainer.appendChild(optionDiv);
+            }
+
+            // Set the first option to be active
+            optionsContainer.children[0].classList.toggle("hacb-option-active");
+
+            // Create right button
+            const btnRight = document.createElement("button");
+            btnRight.type = "button";
+            btnRight.dataset.dir = "right";
+            btnRight.innerHTML = "&#x25B6";
+            wrapper.appendChild(btnRight);
+            btnRight.addEventListener("click", handleClick);
+
+            return wrapper;
+        }
+
+        function handleClick() {
+            const direction = this.dataset.dir;
+            const wrapper = this.parentElement;
+            const loop = wrapper.dataset.loop.toLowerCase();
+            const currentOption = wrapper.querySelector("div.hacb-options div.hacb-option.hacb-option-active");
+            const previousOption = currentOption.previousElementSibling;
+            const nextOption = currentOption.nextElementSibling;
+            const firstOption = wrapper.querySelector("div.hacb-options div.hacb-option:first-child");
+            const lastOption = wrapper.querySelector("div.hacb-options div.hacb-option:last-child");
+            const event = new Event("changed");
+
+            function toggleClasses(currentOption, nextOption) {
+                currentOption.classList.toggle("hacb-option-active");
+                nextOption.classList.toggle("hacb-option-active");
+            }
+
+            function dispatchCustomEvent(oldOption, newOption) {
+                event["HACB"] = {
+                    oldElement: oldOption,
+                    oldValue: oldOption.dataset.value,
+                    oldIndex: parseInt(oldOption.dataset.index),
+                    newElement: newOption,
+                    newValue: newOption.dataset.value,
+                    newIndex: parseInt(newOption.dataset.index),
+                    partType: wrapper.id.split("-")[0]
+                };
+                wrapper.dispatchEvent(event);
+            }
+
+            if (direction === "left" && previousOption) {
+                toggleClasses(currentOption, previousOption);
+                dispatchCustomEvent(currentOption, previousOption);
+
+            } else if (direction === "right" && nextOption) {
+                toggleClasses(currentOption, nextOption);
+                dispatchCustomEvent(currentOption, nextOption);
+
+            } else if (direction === "left" && loop === "true") {
+                toggleClasses(currentOption, lastOption);
+                dispatchCustomEvent(currentOption, lastOption);
+
+            } else if (direction === "right" && loop === "true") {
+                toggleClasses(currentOption, firstOption);
+                dispatchCustomEvent(currentOption, firstOption);
+
+            } else {
+                console.assert(false, "handleClick function failed");
+            }
+        }
+
+        function addHACBIndices() {
+            document.querySelectorAll("div.hacb-wrapper div.hacb-options").forEach(inputOptions => {
+                [...inputOptions.children].forEach((child, i) => {
+                    child.innerHTML = (i + 1).toString() + ". " + child.innerHTML;
+                });
+            });
+        }
+
+        /*
+        https://sebhastian.com/javascript-create-button/
+        https://stackoverflow.com/questions/2753732/how-to-access-svg-elements-with-javascript
+        https://stackoverflow.com/questions/51023172/opera-throws-typeerror-cannot-read-property-appendchild-of-null-when-a-objec
+
+        */
+    </script>
+</body>
+
+</html>
