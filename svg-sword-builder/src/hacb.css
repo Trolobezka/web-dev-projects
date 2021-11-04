@@ -1,0 +1,76 @@
+:root {
+    --btn-rel-w: 0.2fr;
+    --border-thickness: 2px;
+    --border-radius: 8px;
+    --color-1: #4d9be6;
+    --color-2: #4d65b4;
+    --color-3: #323353;
+}
+
+div.shadow-outline {
+    --offset: 0.5px;
+    --blur: 0px;
+    --alpha: 0.5;
+    text-shadow:
+        var(--offset) 0px var(--blur) rgba(0, 0, 0, var(--alpha)),
+        calc(-1 * var(--offset)) 0px var(--blur) rgba(0, 0, 0, var(--alpha)),
+        0px var(--offset) var(--blur) rgba(0, 0, 0, var(--alpha)),
+        0px calc(-1 * var(--offset)) var(--blur) rgba(0, 0, 0, var(--alpha));
+}
+
+div.hacb-wrapper {
+    margin: 10px 0;
+    width: 250px;
+
+    display: grid;
+    grid-template-columns: var(--btn-rel-w) 1fr var(--btn-rel-w);
+
+    font-weight: bold;
+}
+
+div.hacb-wrapper button {
+    border: 0;
+    background: var(--color-1);
+    color: white;
+    cursor: pointer;
+}
+
+div.hacb-wrapper button:hover {
+    background: var(--color-2);
+    border-color: var(--color-2) !important;
+}
+
+div.hacb-wrapper button:first-child {
+    border-left: var(--border-thickness) solid var(--color-1);
+    border-top: var(--border-thickness) solid var(--color-1);
+    border-bottom: var(--border-thickness) solid var(--color-1);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+div.hacb-wrapper button:last-child {
+    border-right: var(--border-thickness) solid var(--color-1);
+    border-top: var(--border-thickness) solid var(--color-1);
+    border-bottom: var(--border-thickness) solid var(--color-1);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+div.hacb-options {
+    grid-column-start: 2;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    color: var(--color-3);
+
+    border-top: var(--border-thickness) solid var(--color-1);
+    border-bottom: var(--border-thickness) solid var(--color-1);
+}
+
+div.hacb-option {
+    padding: 5px 0;
+    text-align: center;
+}
+
+div.hacb-option:not(.hacb-option-active) {
+    display: none;
+}

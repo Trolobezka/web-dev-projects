@@ -60,9 +60,12 @@ https://stackoverflow.com/questions/21117160/what-is-export-default-in-javascrip
 https://stackoverflow.com/questions/39694407/adding-javascript-type-hints-for-vscode-monaco-intellisence
 https://stackoverflow.com/questions/8407622/set-type-for-function-parameters
 https://stackoverflow.com/questions/14611995/how-to-specify-an-array-of-objects-as-a-parameter-or-return-value-in-jsdoc
+https://stackoverflow.com/questions/23667208/calc-not-working-within-media-queries
+https://stackoverflow.com/questions/7415872/change-color-of-png-image-via-css
 
 Other:
 https://lospec.com/palette-list/resurrect-64
+https://css-tricks.com/snippets/css/complete-guide-grid
 https://sebhastian.com/javascript-create-button
 https://www.freecodecamp.org/news/css-media-queries-breakpoints-media-types-standard-resolutions-and-more
 https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler
