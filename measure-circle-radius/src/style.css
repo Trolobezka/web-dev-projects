@@ -1,0 +1,142 @@
+:root {
+    --border-thickness: 2px;
+    --border-radius: 10px;
+    --button-size: 40px;
+    --checkbox-size: calc(30px - 2 * var(--border-thickness));
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, sans-serif;
+    color: blue;
+    font-size: 1.25em;
+}
+
+#page {
+    display: grid;
+    grid-template-columns: repeat(1, min-content);
+    grid-template-rows: repeat(3, min-content);
+    row-gap: 5px;
+}
+
+#page header h1 {
+    margin: 0;
+    /* text-shadow: 2px 2px 0.5px #4d65b44d; */
+}
+
+/* #page div#bubbles {
+    
+} */
+
+#page div#bubbles div.bubble {
+    --size: 40px;
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    border-radius: 50%;
+
+    background: white;
+    border: 2px solid blue;
+
+    text-align: center;
+}
+
+#page div#bubbles div.bubble:last-of-type {
+    width: max-content;
+    padding: 0 15px;
+    border-radius: var(--size);
+}
+
+#page svg#svg-main {
+    border: 2px solid blue;
+    border-radius: var(--border-radius);
+}
+
+#page div#bottom-row {
+    display: grid;
+    grid-template-columns: min-content auto;
+    column-gap: 15px;
+}
+
+div#controls {
+    display: grid;
+    column-gap: 5px;
+    row-gap: 5px;
+    grid-template-columns: repeat(4, min-content);
+    grid-template-rows: repeat(3, min-content);
+}
+
+button.default-button {
+    cursor: pointer;
+    color: blue;
+    background: white;
+    border: 2px solid blue;
+    border-radius: var(--border-radius);
+    
+    font-size: inherit;
+}
+
+div#controls .control {
+    grid-column-start: var(--c);
+    grid-row-start: var(--r);
+    justify-self: center;
+    align-self: center;
+    cursor: pointer;
+}
+
+div#controls button {
+    width: var(--button-size);
+    height: var(--button-size);
+
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: blue;
+    background: white;
+    border: 2px solid blue;
+    border-radius: var(--border-radius);
+}
+
+div#controls button:hover {
+    color: white;
+    background: blue;
+}
+
+div#controls input[type="checkbox"]:before {
+    --offset: calc(-0.5 * var(--checkbox-size) + 2 * var(--border-thickness));
+
+    content: "";
+    display: block;
+    position: relative;
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    transform: translate(var(--offset), var(--offset));
+    
+    background: white;
+    border: var(--border-thickness) solid blue;
+    border-radius: calc(var(--border-radius) * 0.5);
+}
+
+div#controls input[type="checkbox"]:after {
+    --parent-offset: calc(-0.5 * var(--checkbox-size) + 2 * var(--border-thickness));
+    --parent-size: calc(var(--checkbox-size) + 2 * var(--border-thickness));
+    --size-scale: 0.6;
+    --size: calc(var(--size-scale) * var(--parent-size));
+
+    content: "";
+    display: block;
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    transform: translate(calc((var(--parent-size) - var(--size)) / 2), calc((var(--parent-size) - var(--size)) / 2)) translate(calc(var(--parent-offset)), calc(var(--parent-offset) - var(--parent-size)));
+    
+    background: white;
+    border-radius: calc(var(--border-radius) * 0.2);
+}
+
+div#controls input[type="checkbox"]:checked:after {
+    content: "";
+    background: blue;
+}

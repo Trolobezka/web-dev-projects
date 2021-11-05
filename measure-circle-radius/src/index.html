@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measure Circle Radius</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="./app.js" type="module"></script>
+</head>
+
+<body>
+    <div id="page">
+        <header>
+            <h1>Measure Circle Radius</h1>
+        </header>
+
+        <div id="bubbles">
+            <div class="bubble">A</div>
+            <div class="bubble">B</div>
+            <div class="bubble">Upload Image</div>
+        </div>
+
+        <svg id="svg-main" width="600" height="450" viewBox="0 0 0 0" xmlns="http://www.w3.org/2000/svg">
+            <style>
+                g.point {
+                    fill: none;
+                    pointer-events: all;
+                    stroke: black;
+                    opacity: 80%;
+                    stroke-linecap: round;
+                    stroke-linejoin: round;
+                    stroke-width: 2;
+                }
+
+                g.point:hover {
+                    stroke: red;
+                }
+
+                g.point:not(.selected) circle.selection-cirle {
+                    display: none;
+                }
+
+                g.point circle.selection-cirle {
+                    stroke: cyan;
+                }
+            </style>
+            <defs>
+                <g id="point-template" class="point" transform="translate(0, 0) scale(1.5)">
+                    <circle cx="0" cy="0" r="5" />
+                    <line x1="0" y1="-10" x2="0" y2="10" />
+                    <line x1="-10" y1="0" x2="10" y2="0" />
+                    <circle class="selection-cirle" cx="0" cy="0" r="15" />
+                </g>
+            </defs>
+            <g id="image-container"></g>
+            <g id="points-container"></g>
+        </svg>
+
+        <div id="bottom-row">
+            <div id="controls">
+                <button id="move-up" class="control" type="button" style="--c:2;--r:1">&#11165;</button>
+                <button id="move-left" class="control" type="button" style="--c:1;--r:2">&#11164;</button>
+                <input id="move-invert" class="control" type="checkbox" style="--c:2;--r:2">
+                <button id="move-right" class="control" type="button" style="--c:3;--r:2">&#11166;</button>
+                <button id="move-down" class="control" type="button" style="--c:2;--r:3">&#11167;</button>
+                <button id="zoom-plus" class="control" type="button" style="--c:4;--r:1">+</button>
+                <button id="zoom-minus" class="control" type="button" style="--c:4;--r:2">-</button>
+                <button id="control-delete" class="control" type="button" style="--c:4;--r:3">&#x2715;</button>
+                <button id="control-color" class="control" type="button" style="--c:3;--r:1">C</button>
+            </div>
+
+            <div id="results">
+                <div id="info-for-user">You need at least 3 more points!</div>
+                <div>Radius: <span>200</span> px</div>
+                <div>Position: <span>150</span>, <span>-200</span> px</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
