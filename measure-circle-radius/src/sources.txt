@@ -1,0 +1,26 @@
+StackOverflow
+https://stackoverflow.com/questions/10859257/how-can-i-add-an-image-element-to-the-svg-dom
+https://stackoverflow.com/questions/11442712/get-width-height-of-remote-image-from-url
+https://stackoverflow.com/questions/18147915/get-width-height-of-svg-element
+https://stackoverflow.com/questions/6073505/what-is-the-difference-between-screenx-y-clientx-y-and-pagex-y
+https://stackoverflow.com/questions/29261304/how-to-get-the-click-coordinates-relative-to-svg-element-holding-the-onclick-lis
+https://stackoverflow.com/questions/18408488/setting-width-with-css-attr
+https://stackoverflow.com/questions/9208244/how-to-hover-over-an-svg-rect
+https://stackoverflow.com/questions/54358737/add-and-remove-id-by-pure-javascript/54358814
+https://stackoverflow.com/questions/880512/prevent-text-selection-after-double-click
+https://stackoverflow.com/questions/4603021/is-it-possible-to-change-javascript-variable-values-while-debugging-in-google-ch
+https://stackoverflow.com/questions/5629684/how-can-i-check-if-an-element-exists-in-the-visible-dom
+https://stackoverflow.com/questions/9249359/vertically-align-text-within-a-div
+https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+
+Circle Fitting
+https://www.emis.de/journals/BBMS/Bulletin/sup962/gander.pdf
+https://en.wikipedia.org/wiki/Gauss–Newton_algorithm
+
+Other
+https://css-tricks.com/snippets/css/complete-guide-grid
+https://www.geeksforgeeks.org/how-to-create-an-image-element-dynamically-using-javascript
+https://github.com/parcel-bundler/parcel/issues/3056
+https://www.htmlsymbols.xyz/geometric-symbols
+http://jsfiddle.net/YMuPw/15
+https://css-tricks.com/svg-tabs-using-svg-shape-template
