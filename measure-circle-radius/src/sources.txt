@@ -12,6 +12,8 @@ https://stackoverflow.com/questions/4603021/is-it-possible-to-change-javascript-
 https://stackoverflow.com/questions/5629684/how-can-i-check-if-an-element-exists-in-the-visible-dom
 https://stackoverflow.com/questions/9249359/vertically-align-text-within-a-div
 https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+https://stackoverflow.com/questions/2591368/jsm-vs-js-files
+https://stackoverflow.com/questions/57492546/what-is-the-difference-between-js-and-mjs-files
 
 Circle Fitting
 https://www.emis.de/journals/BBMS/Bulletin/sup962/gander.pdf
