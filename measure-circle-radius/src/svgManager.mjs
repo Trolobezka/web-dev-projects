@@ -1,5 +1,7 @@
 export class SVGManager {
-    id = "";
+    pageDocument = null;
+    id = "svg-main";
+    element = null;
     width;
     height;
     viewBox = {
@@ -9,6 +11,7 @@ export class SVGManager {
         height: 0
     };
     imageContainerID = "image-container";
+    imageContainerElement = null;
     points = null;
 
     get ratio() {
@@ -18,25 +21,32 @@ export class SVGManager {
         return this.width / this.viewBox.width;
     }
 
-    constructor(id, width, height) {
-        this.id = id;
+    constructor(pageDoc, width, height) {
+        this.pageDocument = pageDoc;
         this.width = width;
         this.viewBox.width = width;
         this.height = height;
         this.viewBox.height = height;
 
+        this.initElements(this.pageDocument);
         this.points = new SVGPointContainer(this);
+        this.points.initElements(this.element);
+    }
+
+    initElements(pageDoc) {
+        this.element = pageDoc.querySelector(`svg#${this.id}`);
+        this.imageContainerElement = this.element.querySelector(`g#${this.imageContainerID}`);
     }
 
     loadImage(url) {
-        const svgImage = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        const svgImage = this.pageDocument.createElementNS("http://www.w3.org/2000/svg", "image");
         return svgImage.new_setAttributes({
             "href": url,
             "href-ns": "http://www.w3.org/1999/xlink",
             "x": "0",
             "y": "0",
             "visibility": "visible"
-        }).new_appendInto(`svg#${this.id} g#${this.imageContainerID}`);
+        }).new_appendInto(this.imageContainerElement);
     }
 
     /**
@@ -82,14 +92,11 @@ export class SVGManager {
             this.viewBox.height = 0;
         }
 
-        const svgElement = document.getElementById(this.id);
-        if (svgElement) {
-            svgElement.attributes["viewBox"].value =
-                this.viewBox.x + " " +
-                this.viewBox.y + " " +
-                this.viewBox.width + " " +
-                this.viewBox.height;
-        }
+        this.element.attributes["viewBox"].value =
+            this.viewBox.x + " " +
+            this.viewBox.y + " " +
+            this.viewBox.width + " " +
+            this.viewBox.height;
     }
 }
 
@@ -97,7 +104,9 @@ export class SVGPointContainer {
     svgManagerReference = null;
     instances = [];
     templateID = "point-template";
+    templateElement = null;
     containerID = "points-container";
+    containerElement = null;
     defaultScale = 1.5;
     selected = null;
     needsCleanUp = false;
@@ -110,25 +119,23 @@ export class SVGPointContainer {
         this.svgManagerReference = svgManRef;
     }
 
+    initElements(svgDocument) {
+        this.templateElement = svgDocument.querySelector(`g#${this.templateID}`);
+        this.containerElement = svgDocument.querySelector(`g#${this.containerID}`);
+    }
+
     add(x, y) {
-        const container = document.querySelector("svg g#" + this.containerID);
-        const template = document.querySelector("svg g#" + this.templateID);
-        if (container && template) {
-            const point = template.cloneNode(true);
-            point.removeAttribute("id");
-            point.attributes["transform"].value = SVGPoint.createTransform(x, y, this.currentScale);
-            this.instances.push(new SVGPoint(point, x, y));
-            // point.addEventListener("click", handleSVGPointClick);
-            // point.addEventListener('mousedown', handleSVGPointMouseDown, false);
-            container.appendChild(point);
-            return point;
-        }
-        return null;
+        const point = this.templateElement.cloneNode(true);
+        point.removeAttribute("id");
+        point.attributes["transform"].value = SVGPoint.createTransform(x, y, this.currentScale);
+        this.instances.push(new SVGPoint(point, x, y));
+        this.containerElement.appendChild(point);
+        return point;
     }
 
     getOrRemove(index) {
         const point = this.instances[index];
-        if (this.needsCleanUp && (point.removed || !document.body.contains(point.element))) {
+        if (this.needsCleanUp && (point.removed || !this.svgManagerReference.pageDocument.body.contains(point.element))) {
             console.log("deleting", point);
             this.instances.splice(index, 1);
             return null;

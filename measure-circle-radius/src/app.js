@@ -24,7 +24,7 @@ window["SETTINGS"] = SETTINGS;
 
 window.addEventListener("load", () => {
 
-    SETTINGS.svg = new SVGManager("svg-main", 600, 600);
+    SETTINGS.svg = new SVGManager(document, 600, 600);
 
     // Add event listeners to control buttons
     SETTINGS.controls.arrowsIDs.forEach(id => {
