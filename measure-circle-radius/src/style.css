@@ -140,3 +140,16 @@ div#controls input[type="checkbox"]:checked:after {
     content: "";
     background: blue;
 }
+
+/* -------- WIP NOTES -------- */
+
+#page div#tutorial h3 {
+    margin: 0;
+    margin-top: 5px;
+}
+
+#page div#tutorial p {
+    margin: 0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
