@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Výpočet zubů</title>
+</head>
+<body>
+    <a href="/richard.kokstein/index.html">zpět na hlavní stránku</a>
+    <h1>Výpočet parametrů čelního ozubeného kola s šikmými zuby</h1>
+    <div style="display: grid; grid-template-columns: max-content max-content;">
+        <div>Počet zubů z [-]</div>
+        <div><input type="number" name="z" id="" value="25"></div>
+        <div>Průměr hlavové kružnice da [mm]</div>
+        <div><input type="number" name="d_a0" id="" value="60"></div>
+        <div>Úhel záběru alfa [°]</div>
+        <div><input type="number" name="alfa" id="" value="20"></div>
+        <div>Úhel sklonu boku zubů beta [°]</div>
+        <div><input type="number" name="beta" id="" value="15"></div>
+    </div>
+    <div><input type="checkbox" name="rada2" id=""><span>Použít druhou řadu modulů</span></div>
+    <button id="submit">Vypočítat</button>
+    <h2>Výsledky</h2>
+    <div><textarea name="vysledky" id="" cols="30" rows="10"></textarea></div>
+    <div><textarea name="tex" id="" cols="30" rows="10"></textarea></div>
+    <script src="tex.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
